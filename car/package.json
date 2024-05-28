@@ -1,0 +1,17 @@
+{
+  "name": "simpleCar",
+  "version": "1.0.0",
+  "description": "A simple 3D car game using Three.js",
+  "main": "index.js",
+  "scripts": {
+    "dev": "lite-server"
+  },
+  "author": "Your Name",
+  "license": "ISC",
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  },
+  "dependencies": {
+    "three": "^0.164.1"
+  }
+}
