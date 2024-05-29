@@ -1,6 +1,4 @@
-/**
- * @author mrdoob / http://mrdoob.com/
- */
+
 
 THREE.OBJLoader = function ( manager ) {
 
@@ -9,27 +7,26 @@ THREE.OBJLoader = function ( manager ) {
     this.materials = null;
 
     this.regexp = {
-        // v float float float
         vertex_pattern           : /^v\s+([\d|\.|\+|\-|e|E]+)\s+([\d|\.|\+|\-|e|E]+)\s+([\d|\.|\+|\-|e|E]+)/,
-        // vn float float float
+        
         normal_pattern           : /^vn\s+([\d|\.|\+|\-|e|E]+)\s+([\d|\.|\+|\-|e|E]+)\s+([\d|\.|\+|\-|e|E]+)/,
-        // vt float float
+        
         uv_pattern               : /^vt\s+([\d|\.|\+|\-|e|E]+)\s+([\d|\.|\+|\-|e|E]+)/,
-        // f vertex vertex vertex
+        
         face_vertex              : /^f\s+(-?\d+)\s+(-?\d+)\s+(-?\d+)(?:\s+(-?\d+))?/,
-        // f vertex/uv vertex/uv vertex/uv
+        
         face_vertex_uv           : /^f\s+(-?\d+)\/(-?\d+)\s+(-?\d+)\/(-?\d+)\s+(-?\d+)\/(-?\d+)(?:\s+(-?\d+)\/(-?\d+))?/,
-        // f vertex/uv/normal vertex/uv/normal vertex/uv/normal
+        
         face_vertex_uv_normal    : /^f\s+(-?\d+)\/(-?\d+)\/(-?\d+)\s+(-?\d+)\/(-?\d+)\/(-?\d+)\s+(-?\d+)\/(-?\d+)\/(-?\d+)(?:\s+(-?\d+)\/(-?\d+)\/(-?\d+))?/,
-        // f vertex//normal vertex//normal vertex//normal
+        
         face_vertex_normal       : /^f\s+(-?\d+)\/\/(-?\d+)\s+(-?\d+)\/\/(-?\d+)\s+(-?\d+)\/\/(-?\d+)(?:\s+(-?\d+)\/\/(-?\d+))?/,
-        // o object_name | g group_name
+        
         object_pattern           : /^[og]\s*(.+)?/,
-        // s boolean
+        
         smoothing_pattern        : /^s\s+(\d+|on|off)/,
-        // mtllib file_reference
+        
         material_library_pattern : /^mtllib /,
-        // usemtl material_name
+        
         material_use_pattern     : /^usemtl /
     };
 
@@ -79,8 +76,7 @@ THREE.OBJLoader.prototype = {
 
             startObject: function ( name, fromDeclaration ) {
 
-                // If the current object (initial from reset) is not from a g/o declaration in the parsed
-                // file. We need to use it for the first parsed g/o to keep things in sync.
+
                 if ( this.object && this.object.fromDeclaration === false ) {
 
                     this.object.name = name;
@@ -113,8 +109,6 @@ THREE.OBJLoader.prototype = {
 
                         var previous = this._finalize( false );
 
-                        // New usemtl declaration overwrites an inherited material, except if faces were declared
-                        // after the material, then it must be preserved for proper MultiMaterial continuation.
                         if ( previous && ( previous.inherited || previous.groupCount <= 0 ) ) {
 
                             this.materials.splice( previous.index, 1 );
@@ -174,7 +168,7 @@ THREE.OBJLoader.prototype = {
 
                         }
 
-                        // Ignore objects tail materials if no face declarations followed them before a new o/g started.
+                        
                         if ( end && this.materials.length > 1 ) {
 
                             for ( var mi = this.materials.length - 1; mi >= 0; mi-- ) {
@@ -185,7 +179,7 @@ THREE.OBJLoader.prototype = {
 
                         }
 
-                        // Guarantee at least one empty material, this makes the creation later more straight forward.
+                        
                         if ( end && this.materials.length === 0 ) {
 
                             this.materials.push({
@@ -361,7 +355,7 @@ THREE.OBJLoader.prototype = {
 
                 if ( na !== undefined ) {
 
-                    // Normals are many times the same. If so, skip function call and parseInt.
+                    
                     var nLen = this.normals.length;
                     ia = this.parseNormalIndex( na, nLen );
 
@@ -422,14 +416,14 @@ THREE.OBJLoader.prototype = {
 
         if ( text.indexOf( '\r\n' ) !== - 1 ) {
 
-            // This is faster than String.split with regex that splits on both
+            
             text = text.replace( /\r\n/g, '\n' );
 
         }
 
         if ( text.indexOf( '\\\n' ) !== - 1) {
 
-            // join lines separated by a line continuation character (\)
+            
             text = text.replace( /\\\n/g, '' );
 
         }
@@ -439,7 +433,7 @@ THREE.OBJLoader.prototype = {
         var lineLength = 0;
         var result = [];
 
-        // Faster to just trim left side of the line. Use if available.
+        
         var trimLeft = ( typeof ''.trimLeft === 'function' );
 
         for ( var i = 0, l = lines.length; i < l; i ++ ) {
@@ -454,7 +448,7 @@ THREE.OBJLoader.prototype = {
 
             lineFirstChar = line.charAt( 0 );
 
-            // @todo invoke passed in handler if any
+            
             if ( lineFirstChar === '#' ) continue;
 
             if ( lineFirstChar === 'v' ) {
@@ -462,9 +456,6 @@ THREE.OBJLoader.prototype = {
                 lineSecondChar = line.charAt( 1 );
 
                 if ( lineSecondChar === ' ' && ( result = this.regexp.vertex_pattern.exec( line ) ) !== null ) {
-
-                    // 0                  1      2      3
-                    // ["v 1.0 2.0 3.0", "1.0", "2.0", "3.0"]
 
                     state.vertices.push(
                         parseFloat( result[ 1 ] ),
@@ -474,9 +465,6 @@ THREE.OBJLoader.prototype = {
 
                 } else if ( lineSecondChar === 'n' && ( result = this.regexp.normal_pattern.exec( line ) ) !== null ) {
 
-                    // 0                   1      2      3
-                    // ["vn 1.0 2.0 3.0", "1.0", "2.0", "3.0"]
-
                     state.normals.push(
                         parseFloat( result[ 1 ] ),
                         parseFloat( result[ 2 ] ),
@@ -485,8 +473,6 @@ THREE.OBJLoader.prototype = {
 
                 } else if ( lineSecondChar === 't' && ( result = this.regexp.uv_pattern.exec( line ) ) !== null ) {
 
-                    // 0               1      2
-                    // ["vt 0.1 0.2", "0.1", "0.2"]
 
                     state.uvs.push(
                         parseFloat( result[ 1 ] ),
@@ -513,9 +499,6 @@ THREE.OBJLoader.prototype = {
 
                 } else if ( ( result = this.regexp.face_vertex_uv.exec( line ) ) !== null ) {
 
-                    // f vertex/uv vertex/uv vertex/uv
-                    // 0                  1    2    3    4    5    6   7          8
-                    // ["f 1/1 2/2 3/3", "1", "1", "2", "2", "3", "3", undefined, undefined]
 
                     state.addFace(
                         result[ 1 ], result[ 3 ], result[ 5 ], result[ 7 ],
@@ -602,7 +585,6 @@ THREE.OBJLoader.prototype = {
 
             } else {
 
-                // Handle null terminated files without exception
                 if ( line === '\0' ) continue;
 
                 throw new Error( "Unexpected line: '" + line  + "'" );
@@ -623,7 +605,6 @@ THREE.OBJLoader.prototype = {
             var materials = object.materials;
             var isLine = ( geometry.type === 'Line' );
 
-            // Skip o/g line declarations that did not follow with any faces
             if ( geometry.vertices.length === 0 ) continue;
 
             var buffergeometry = new THREE.BufferGeometry();
@@ -646,7 +627,6 @@ THREE.OBJLoader.prototype = {
 
             }
 
-            // Create materials
 
             var createdMaterials = [];
 
@@ -659,7 +639,6 @@ THREE.OBJLoader.prototype = {
 
                     material = this.materials.create( sourceMaterial.name );
 
-                    // mtl etc. loaders probably can't create line materials correctly, copy properties to a line material.
                     if ( isLine && material && ! ( material instanceof THREE.LineBasicMaterial ) ) {
 
                         var materialLine = new THREE.LineBasicMaterial();
@@ -683,7 +662,6 @@ THREE.OBJLoader.prototype = {
 
             }
 
-            // Create mesh
 
             var mesh;
 

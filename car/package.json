@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "lite-server"
   },
-  "author": "Your Name",
+  "author": "210812035王曼妮、210812037黎萱、210812039杨晶",
   "license": "ISC",
   "devDependencies": {
     "lite-server": "^2.6.1"

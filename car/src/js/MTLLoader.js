@@ -1,8 +1,4 @@
-/**
- * Loads a Wavefront .mtl file specifying materials
- *
- * @author angelxuanchang
- */
+
 
 THREE.MTLLoader = function ( manager ) {
 
@@ -29,36 +25,12 @@ THREE.MTLLoader.prototype = {
 
     },
 
-    /**
-     * Set base path for resolving references.
-     * If set this path will be prepended to each loaded and found reference.
-     *
-     * @see setTexturePath
-     * @param {String} path
-     *
-     * @example
-     *     mtlLoader.setPath( 'assets/obj/' );
-     *     mtlLoader.load( 'my.mtl', ... );
-     */
     setPath: function ( path ) {
 
         this.path = path;
 
     },
 
-    /**
-     * Set base path for resolving texture references.
-     * If set this path will be prepended found texture reference.
-     * If not set and setPath is, it will be used as texture base path.
-     *
-     * @see setPath
-     * @param {String} path
-     *
-     * @example
-     *     mtlLoader.setPath( 'assets/obj/' );
-     *     mtlLoader.setTexturePath( 'assets/textures/' );
-     *     mtlLoader.load( 'my.mtl', ... );
-     */
     setTexturePath: function ( path ) {
 
         this.texturePath = path;
@@ -85,17 +57,6 @@ THREE.MTLLoader.prototype = {
 
     },
 
-    /**
-     * Parses a MTL file.
-     *
-     * @param {String} text - Content of MTL file
-     * @return {THREE.MTLLoader.MaterialCreator}
-     *
-     * @see setPath setTexturePath
-     *
-     * @note In order for relative texture references to resolve correctly
-     * you must call setPath and/or setTexturePath explicitly prior to parse.
-     */
     parse: function ( text ) {
 
         var lines = text.split( '\n' );
@@ -110,7 +71,6 @@ THREE.MTLLoader.prototype = {
 
             if ( line.length === 0 || line.charAt( 0 ) === '#' ) {
 
-                // Blank line or comment ignore
                 continue;
 
             }
@@ -124,8 +84,6 @@ THREE.MTLLoader.prototype = {
             value = value.trim();
 
             if ( key === 'newmtl' ) {
-
-                // New material
 
                 info = { name: value };
                 materialsInfo[ value ] = info;
@@ -206,7 +164,6 @@ THREE.MTLLoader.MaterialCreator.prototype = {
 
         for ( var mn in materialsInfo ) {
 
-            // Convert materials info into normalized form based on options
 
             var mat = materialsInfo[ mn ];
 
@@ -226,7 +183,6 @@ THREE.MTLLoader.MaterialCreator.prototype = {
                     case 'ka':
                     case 'ks':
 
-                        // Diffuse color (color under white light) using RGB values
 
                         if ( this.options && this.options.normalizeRGB ) {
 
@@ -314,7 +270,6 @@ THREE.MTLLoader.MaterialCreator.prototype = {
 
     createMaterial_: function ( materialName ) {
 
-        // Create material
 
         var scope = this;
         var mat = this.materialsInfo[ materialName ];
@@ -330,7 +285,6 @@ THREE.MTLLoader.MaterialCreator.prototype = {
             if ( typeof url !== 'string' || url === '' )
                 return '';
 
-            // Absolute URL
             if ( /^https?:\/\//i.test( url ) ) return url;
 
             return baseUrl + url;
@@ -339,7 +293,7 @@ THREE.MTLLoader.MaterialCreator.prototype = {
 
         function setMapForType( mapType, value ) {
 
-            if ( params[ mapType ] ) return; // Keep the first encountered texture
+            if ( params[ mapType ] ) return; 
 
             var texParams = scope.getTextureParams( value, params );
             var map = scope.loadTexture( resolveURL( scope.baseUrl, texParams.url ) );
@@ -362,11 +316,9 @@ THREE.MTLLoader.MaterialCreator.prototype = {
 
             switch ( prop.toLowerCase() ) {
 
-                // Ns is material specular exponent
 
                 case 'kd':
 
-                    // Diffuse color (color under white light) using RGB values
 
                     params.color = new THREE.Color().fromArray( value );
 
@@ -374,14 +326,12 @@ THREE.MTLLoader.MaterialCreator.prototype = {
 
                 case 'ks':
 
-                    // Specular color (color when light is reflected from shiny surface) using RGB values
                     params.specular = new THREE.Color().fromArray( value );
 
                     break;
 
                 case 'map_kd':
 
-                    // Diffuse texture map
 
                     setMapForType( "map", value );
 
@@ -389,7 +339,6 @@ THREE.MTLLoader.MaterialCreator.prototype = {
 
                 case 'map_ks':
 
-                    // Specular map
 
                     setMapForType( "specularMap", value );
 
@@ -398,7 +347,6 @@ THREE.MTLLoader.MaterialCreator.prototype = {
                 case 'map_bump':
                 case 'bump':
 
-                    // Bump texture map
 
                     setMapForType( "bumpMap", value );
 
@@ -406,8 +354,6 @@ THREE.MTLLoader.MaterialCreator.prototype = {
 
                 case 'ns':
 
-                    // The specular exponent (defines the focus of the specular highlight)
-                    // A high exponent results in a tight, concentrated highlight. Ns values normally range from 0 to 1000.
 
                     params.shininess = parseFloat( value );
 
@@ -473,7 +419,7 @@ THREE.MTLLoader.MaterialCreator.prototype = {
         if ( pos >= 0 ) {
 
             texParams.scale.set( parseFloat( items[ pos + 1 ] ), parseFloat( items[ pos + 2 ] ) );
-            items.splice( pos, 4 ); // we expect 3 parameters here!
+            items.splice( pos, 4 ); 
 
         }
 
@@ -482,7 +428,7 @@ THREE.MTLLoader.MaterialCreator.prototype = {
         if ( pos >= 0 ) {
 
             texParams.offset.set( parseFloat( items[ pos + 1 ] ), parseFloat( items[ pos + 2 ] ) );
-            items.splice( pos, 4 ); // we expect 3 parameters here!
+            items.splice( pos, 4 );
 
         }
 

@@ -4,7 +4,6 @@
 	(factory((global.THREE = global.THREE || {})));
 }(this, (function (exports) { 'use strict';
 
-	// Polyfills
 
 	if ( Number.EPSILON === undefined ) {
 
@@ -13,9 +12,6 @@
 	}
 
 	if ( Number.isInteger === undefined ) {
-
-		// Missing in IE
-		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger
 
 		Number.isInteger = function ( value ) {
 
@@ -29,8 +25,6 @@
 
 	if ( Math.sign === undefined ) {
 
-		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sign
-
 		Math.sign = function ( x ) {
 
 			return ( x < 0 ) ? - 1 : ( x > 0 ) ? 1 : + x;
@@ -41,8 +35,6 @@
 
 	if ( Function.prototype.name === undefined ) {
 
-		// Missing in IE
-		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/name
 
 		Object.defineProperty( Function.prototype, 'name', {
 
@@ -58,8 +50,6 @@
 
 	if ( Object.assign === undefined ) {
 
-		// Missing in IE
-		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
 
 		( function () {
 
@@ -102,10 +92,6 @@
 		} )();
 
 	}
-
-	/**
-	 * https://github.com/mrdoob/eventdispatcher.js/
-	 */
 
 	function EventDispatcher() {}
 
@@ -320,11 +306,6 @@
 	var BasicDepthPacking = 3200;
 	var RGBADepthPacking = 3201;
 
-	/**
-	 * @author alteredq / http://alteredqualia.com/
-	 * @author mrdoob / http://mrdoob.com/
-	 */
-
 	var _Math = {
 
 		DEG2RAD: Math.PI / 180,
@@ -332,7 +313,6 @@
 
 		generateUUID: function () {
 
-			// http://www.broofa.com/Tools/Math.uuid.htm
 
 			var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split( '' );
 			var uuid = new Array( 36 );
@@ -373,8 +353,6 @@
 
 		},
 
-		// compute euclidian modulo of m % n
-		// https://en.wikipedia.org/wiki/Modulo_operation
 
 		euclideanModulo: function ( n, m ) {
 
@@ -40227,10 +40205,6 @@
 
 	ImmediateRenderObject.prototype.isImmediateRenderObject = true;
 
-	/**
-	 * @author mrdoob / http://mrdoob.com/
-	 * @author WestLangley / http://github.com/WestLangley
-	*/
 
 	function VertexNormalsHelper( object, size, hex, linewidth ) {
 
@@ -40371,11 +40345,6 @@
 
 	}() );
 
-	/**
-	 * @author alteredq / http://alteredqualia.com/
-	 * @author mrdoob / http://mrdoob.com/
-	 * @author WestLangley / http://github.com/WestLangley
-	*/
 
 	function SpotLightHelper( light ) {
 
@@ -40453,13 +40422,6 @@
 
 	}();
 
-	/**
-	 * @author Sean Griffin / http://twitter.com/sgrif
-	 * @author Michael Guerrero / http://realitymeltdown.com
-	 * @author mrdoob / http://mrdoob.com/
-	 * @author ikerr / http://verold.com
-	 * @author Mugen87 / https://github.com/Mugen87
-	 */
 
 	function SkeletonHelper( object ) {
 
@@ -40568,10 +40530,6 @@
 
 	}();
 
-	/**
-	 * @author alteredq / http://alteredqualia.com/
-	 * @author mrdoob / http://mrdoob.com/
-	 */
 
 	function PointLightHelper( light, sphereSize ) {
 
@@ -40587,27 +40545,6 @@
 		this.matrix = this.light.matrixWorld;
 		this.matrixAutoUpdate = false;
 
-		/*
-		var distanceGeometry = new THREE.IcosahedronGeometry( 1, 2 );
-		var distanceMaterial = new THREE.MeshBasicMaterial( { color: hexColor, fog: false, wireframe: true, opacity: 0.1, transparent: true } );
-
-		this.lightSphere = new THREE.Mesh( bulbGeometry, bulbMaterial );
-		this.lightDistance = new THREE.Mesh( distanceGeometry, distanceMaterial );
-
-		var d = light.distance;
-
-		if ( d === 0.0 ) {
-
-			this.lightDistance.visible = false;
-
-		} else {
-
-			this.lightDistance.scale.set( d, d, d );
-
-		}
-
-		this.add( this.lightDistance );
-		*/
 
 	}
 
@@ -40625,28 +40562,9 @@
 
 		this.material.color.copy( this.light.color );
 
-		/*
-		var d = this.light.distance;
-
-		if ( d === 0.0 ) {
-
-			this.lightDistance.visible = false;
-
-		} else {
-
-			this.lightDistance.visible = true;
-			this.lightDistance.scale.set( d, d, d );
-
-		}
-		*/
 
 	};
 
-	/**
-	 * @author abelnation / http://github.com/abelnation
-	 * @author Mugen87 / http://github.com/Mugen87
-	 * @author WestLangley / http://github.com/WestLangley
-	 */
 
 	function RectAreaLightHelper( light ) {
 
@@ -40708,11 +40626,6 @@
 
 	};
 
-	/**
-	 * @author alteredq / http://alteredqualia.com/
-	 * @author mrdoob / http://mrdoob.com/
-	 * @author Mugen87 / https://github.com/Mugen87
-	 */
 
 	function HemisphereLightHelper( light, size ) {
 
@@ -40782,9 +40695,6 @@
 
 	}();
 
-	/**
-	 * @author mrdoob / http://mrdoob.com/
-	 */
 
 	function GridHelper( size, divisions, color1, color2 ) {
 
@@ -40826,11 +40736,6 @@
 	GridHelper.prototype = Object.create( LineSegments.prototype );
 	GridHelper.prototype.constructor = GridHelper;
 
-	/**
-	 * @author mrdoob / http://mrdoob.com/
-	 * @author Mugen87 / http://github.com/Mugen87
-	 * @author Hectate / http://www.github.com/Hectate
-	 */
 
 	function PolarGridHelper( radius, radials, circles, divisions, color1, color2 ) {
 
@@ -40913,14 +40818,9 @@
 	PolarGridHelper.prototype = Object.create( LineSegments.prototype );
 	PolarGridHelper.prototype.constructor = PolarGridHelper;
 
-	/**
-	 * @author mrdoob / http://mrdoob.com/
-	 * @author WestLangley / http://github.com/WestLangley
-	*/
 
 	function FaceNormalsHelper( object, size, hex, linewidth ) {
 
-		// FaceNormalsHelper only supports THREE.Geometry
 
 		this.object = object;
 
@@ -41022,11 +40922,6 @@
 
 	}() );
 
-	/**
-	 * @author alteredq / http://alteredqualia.com/
-	 * @author mrdoob / http://mrdoob.com/
-	 * @author WestLangley / http://github.com/WestLangley
-	 */
 
 	function DirectionalLightHelper( light, size ) {
 
@@ -41102,15 +40997,6 @@
 
 	}();
 
-	/**
-	 * @author alteredq / http://alteredqualia.com/
-	 * @author Mugen87 / https://github.com/Mugen87
-	 *
-	 *	- shows frustum, line of sight and up of the camera
-	 *	- suitable for fast updates
-	 * 	- based on frustum visualization in lightgl.js shadowmap example
-	 *		http://evanw.github.com/lightgl.js/tests/shadowmap.html
-	 */
 
 	function CameraHelper( camera ) {
 
@@ -41253,12 +41139,9 @@
 
 			var w = 1, h = 1;
 
-			// we need just camera projection matrix
-			// world matrix must be identity
 
 			camera.projectionMatrix.copy( this.camera.projectionMatrix );
 
-			// center / target
 
 			setPoint( "c", 0, 0, - 1 );
 			setPoint( "t", 0, 0,  1 );
@@ -41301,10 +41184,6 @@
 
 	}();
 
-	/**
-	 * @author mrdoob / http://mrdoob.com/
-	 * @author Mugen87 / http://github.com/Mugen87
-	 */
 
 	function BoxHelper( object, color ) {
 
@@ -41353,21 +41232,6 @@
 			var min = box.min;
 			var max = box.max;
 
-			/*
-			  5____4
-			1/___0/|
-			| 6__|_7
-			2/___3/
-
-			0: max.x, max.y, max.z
-			1: min.x, max.y, max.z
-			2: min.x, min.y, max.z
-			3: max.x, min.y, max.z
-			4: max.x, max.y, min.z
-			5: min.x, max.y, min.z
-			6: min.x, min.y, min.z
-			7: max.x, min.y, min.z
-			*/
 
 			var position = this.geometry.attributes.position;
 			var array = position.array;
@@ -41398,28 +41262,11 @@
 
 	};
 
-	/**
-	 * @author WestLangley / http://github.com/WestLangley
-	 * @author zz85 / http://github.com/zz85
-	 * @author bhouston / http://clara.io
-	 *
-	 * Creates an arrow for visualizing directions
-	 *
-	 * Parameters:
-	 *  dir - Vector3
-	 *  origin - Vector3
-	 *  length - Number
-	 *  color - color in hex value
-	 *  headLength - Number
-	 *  headWidth - Number
-	 */
-
 	var lineGeometry;
 	var coneGeometry;
 
 	function ArrowHelper( dir, origin, length, color, headLength, headWidth ) {
 
-		// dir is assumed to be normalized
 
 		Object3D.call( this );
 
@@ -41463,7 +41310,6 @@
 
 		return function setDirection( dir ) {
 
-			// dir is assumed to be normalized
 
 			if ( dir.y > 0.99999 ) {
 
@@ -41508,10 +41354,6 @@
 
 	};
 
-	/**
-	 * @author sroucheray / http://sroucheray.org/
-	 * @author mrdoob / http://mrdoob.com/
-	 */
 
 	function AxisHelper( size ) {
 
@@ -41542,40 +41384,11 @@
 	AxisHelper.prototype = Object.create( LineSegments.prototype );
 	AxisHelper.prototype.constructor = AxisHelper;
 
-	/**
-	 * @author zz85 https://github.com/zz85
-	 *
-	 * Centripetal CatmullRom Curve - which is useful for avoiding
-	 * cusps and self-intersections in non-uniform catmull rom curves.
-	 * http://www.cemyuksel.com/research/catmullrom_param/catmullrom.pdf
-	 *
-	 * curve.type accepts centripetal(default), chordal and catmullrom
-	 * curve.tension is used for catmullrom which defaults to 0.5
-	 */
-
-
-	/*
-	Based on an optimized c++ solution in
-	 - http://stackoverflow.com/questions/9489736/catmull-rom-curve-with-no-cusps-and-no-self-intersections/
-	 - http://ideone.com/NoEbVM
-
-	This CubicPoly class could be used for reusing some variables and calculations,
-	but for three.js curve use, it could be possible inlined and flatten into a single function call
-	which can be placed in CurveUtils.
-	*/
 
 	function CubicPoly() {
 
 		var c0 = 0, c1 = 0, c2 = 0, c3 = 0;
 
-		/*
-		 * Compute coefficients for a cubic polynomial
-		 *   p(s) = c0 + c1*s + c2*s^2 + c3*s^3
-		 * such that
-		 *   p(0) = x0, p(1) = x1
-		 *  and
-		 *   p'(0) = t0, p'(1) = t1.
-		 */
 		function init( x0, x1, t0, t1 ) {
 
 			c0 = x0;
@@ -41595,11 +41408,9 @@
 
 			initNonuniformCatmullRom: function ( x0, x1, x2, x3, dt0, dt1, dt2 ) {
 
-				// compute tangents when parameterized in [t1,t2]
 				var t1 = ( x1 - x0 ) / dt0 - ( x2 - x0 ) / ( dt0 + dt1 ) + ( x2 - x1 ) / dt1;
 				var t2 = ( x2 - x1 ) / dt1 - ( x3 - x1 ) / ( dt1 + dt2 ) + ( x3 - x2 ) / dt2;
 
-				// rescale tangents for parametrization in [0,1]
 				t1 *= dt1;
 				t2 *= dt1;
 
